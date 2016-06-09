@@ -1,0 +1,8 @@
+#!/bin/bash
+
+offset=$1
+
+o1=`expr $offset - 20`
+o2=`expr $offset + 20`
+
+sed -n "$o1","$o2"p $HISTFILE
