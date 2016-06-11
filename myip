@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# by @nopernik @korznikov.com
+#
+bldpur='\e[1;35m'
+txtblu='\e[0;34m'
+bldblu='\e[1;34m'
+bldgrn='\e[1;32m'
+txtrst='\e[0m'
+echo
+echo -e "Local:\t" `ip a|grep 'scope global' |grep -v vmnet |grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/[0-9]{1,2}'`
+echo
+myip=`dig a myip.opendns.com @resolver1.opendns.com +short`
+whois $myip | grep -Ei 'inetnum|netrange|cidr|netname|descr|organization|orgname|country'
+echo
+echo -e "------=| $bldgrn $myip $txtrst |=------"
+echo
+
