@@ -7,7 +7,7 @@ outfile = False
 hex_out = False
 if not len(sys.argv[2:]):
    print """Usage:\t xor.py
-		Input:  --rawfile <file> --hexfile <file> | --string STRING | --inhex 50415353574F5244
+		Input:  --rawfile <file> | --hexfile <file> | --string STRING | --inhex 50415353574F5244
 		Key:    --key PASSWORD | --keyhex 50415353574F5244
 		Output: --hex | --outfile <file>
 """
