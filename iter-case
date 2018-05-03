@@ -1,0 +1,92 @@
+#!/usr/bin/python
+#__author__ Alexander Korznikov
+#__date__ 11/11/2015
+#__version__ 1.0
+
+import sys
+import itertools
+import string
+
+qu = string.ascii_letters + string.digits + string.punctuation
+chars_dict = { 'a':['4','@'],'e':['3'],'l':['1'],'i':['1'],'s':['5','$'],'t':['7'],'b':['8'],'o':['0'],'g':['9'] }
+infile = False
+l33t = False
+
+def usage():
+   print '''
+\tGenerate whole spectrum of possible cases of p4$sw0rDs:
+
+\tExamples:
+\t   1. -i Pass strings via stdin:
+   
+\t      # echo 'foo' | iter-case -i
+
+\t   2. -p Pass string via argument:
+
+\t      # iter-case -p foo
+
+\t   3. -f Pass in file argument:
+
+\t      # iter-case -f dict.txt
+
+\t   4. -l 31337 aka skiddies method:
+\t      switch between 'e' -> '3' etc..
+        
+\t      # iter-case [-f|-p|-i] -l
+
+\t// Alexander Korznikov, Ver. 1.0 11/2015
+'''
+  # print '\n\tUsage: cat dict.txt | iter-case-stdin -i'
+  # print '\tWill generate wordlist Passw0rd...pASSW0RD\n'
+   exit()
+
+def do_magic(iter_list):
+ for line in iter_list:
+  out = list(line.strip())
+  cnt = 0
+  for i in out:
+     if i in chars_dict.keys():
+        leet = ''
+        for c in chars_dict[i.lower()]:
+           leet += c
+     else:
+        leet = ''  
+
+     if l33t:
+        out[cnt] = i + leet
+     else:
+        out[cnt] = i + (i.swapcase() if i.isalpha() else i) + leet
+     cnt+=1 
+ 
+  for i in itertools.product(*out):
+     print ''.join(i).strip()
+ if infile: 
+   iter_list.close()
+
+args = sys.argv[1:]
+
+if not args or '-h' in args:
+   usage()
+
+if '-f' in args:
+   try:
+     iter_list = open(args[args.index('-f')+1])
+     infile = True
+   except:
+     usage()
+
+elif '-p' in args:
+   iter_list = [args[args.index('-p')+1]]
+
+elif '-i' in args:
+   iter_list = sys.stdin
+   
+else:
+   usage()
+
+if '-l' in args:
+   l33t = True
+
+# Let's do the magic! ;)
+do_magic(iter_list)
+
